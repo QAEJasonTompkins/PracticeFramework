@@ -1,0 +1,100 @@
+package com.practice.testcases;
+
+import java.awt.List;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
+
+import com.practice.utilities.BrowserFactory;
+
+public class HeroApp {
+	
+	WebDriver driver;
+	
+	//Testing the dropdowns and verifying the options in this function
+	@Test (priority = 1)
+	public void DropdownPrac()
+	{
+		
+		driver=BrowserFactory.startApplication(driver, "Firefox", "https://the-internet.herokuapp.com/");
+		
+		System.out.println(driver.getTitle());
+		
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		
+		WebElement DropDown=driver.findElement(By.xpath("//a[@href='/dropdown']"));
+
+		DropDown.click();
+		
+		WebElement drpDown=driver.findElement(By.xpath("//select[@id='dropdown']"));
+		Select sel = new Select(drpDown);
+		sel.selectByVisibleText("Option 1");
+		
+		//this method chooses the first option within the dropdown menu and confirms it
+		WebElement firstEle = sel.getFirstSelectedOption();
+		System.out.println("first element = " +firstEle.getText());
+		
+		//this loops and displays the options available within the dropdown menu
+		java.util.List<WebElement> listOptions = sel.getOptions();
+		for (WebElement webElement : listOptions) {
+			System.out.println("options -"+webElement.getText());
+			
+		}
+		
+		
+		
+	}
+	
+	//Testing the Checkboxes and verifying if the selections are viable
+	@Test (priority =2)
+	public void CheckBoxes()
+	
+	{
+        driver.navigate().to("https://the-internet.herokuapp.com/");
+        WebElement Checkboxes=driver.findElement(By.xpath("//a[@href= '/checkboxes']"));
+        Checkboxes.click();
+        
+        WebDriverWait wait= new WebDriverWait(driver, 10);
+        WebElement checkBox1=driver.findElement(By.xpath("//input[@type= 'checkbox']"));
+        WebElement checkBox2=driver.findElement(By.xpath("//input[@type= 'checkbox']//following::input[1]"));
+        
+        checkBox1 = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@type= 'checkbox']")));
+        
+        //Selecting and Verifying if checkbox 1 has been selected
+        checkBox1.click();
+        System.out.println("Checkbox1 is Selected");
+      
+        if (checkBox1.isSelected()) {
+        System.out.println("Checkbox 1 is Toggled On");
+        }
+        else {
+        	System.out.println("Checkbox 1 is Toggled Off");
+        }
+        
+        //Selecting and Verifying is checkbox 2 has been deselected
+        if(checkBox2.isSelected()) {
+        System.out.println("Checkbox 2 is Toggled On");
+        }
+        else {
+        checkBox2.click();
+        System.out.println("Checkbox 2 is Toggled Off");
+        }
+	}
+	
+	//TODO: begin Testing the AddRemoveElemnents Function and try to incorporate a loop
+	@Test (priority =3)
+	public void AddRemoveElements()
+	
+	{
+		
+	}
+	
+	
+	
+}
