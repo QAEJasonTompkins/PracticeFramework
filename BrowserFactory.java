@@ -17,11 +17,11 @@ public class BrowserFactory {
 			driver=new ChromeDriver();
 			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
 		}
-		if(browserName.equals("Firefox"))
+		else if(browserName.equals("Firefox"))
 		{
 			System.setProperty("webdriver.gecko.driver","./Drivers/geckodriver.exe");
 			driver=new FirefoxDriver();
-			driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
+			driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
 		}
 		else
 		{

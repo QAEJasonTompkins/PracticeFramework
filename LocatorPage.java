@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 
-//createed this class to clean up and minimize the amount of hard coded data in main scripts 
+//created this class to clean up and minimize the amount of hard coded data in main scripts 
 public class LocatorPage {
 	
 	WebDriver driver;

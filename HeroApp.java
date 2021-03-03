@@ -13,9 +13,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import com.practice.utilities.BrowserFactory;
+import com.practice.utilities.Helper;
+import com.practice.pages.BaseClass;
 import com.practice.pages.LocatorPage;
 
-public class HeroApp {
+public class HeroApp extends BaseClass{
 	
 	WebDriver driver;
 	
@@ -23,8 +25,7 @@ public class HeroApp {
 	@Test (priority = 1)
 	public void DropdownPrac()
 	{
-		
-		driver=BrowserFactory.startApplication(driver, "Firefox", "https://the-internet.herokuapp.com/");
+		//driver = BrowserFactory.startApplication(driver, "Firefox", "https://the-internet.herokuapp.com/");
 		
 		System.out.println(driver.getTitle());
 		
@@ -33,6 +34,7 @@ public class HeroApp {
 		LocatorPage locatorPage = PageFactory.initElements(driver, LocatorPage.class);
 		
 		locatorPage.HandlingDropdown();
+		
 		
 		}
 		
@@ -43,11 +45,13 @@ public class HeroApp {
 	public void CheckBoxes()
 	
 	{
-        driver.navigate().to("https://the-internet.herokuapp.com/");
+        driver.navigate().back();
 
         LocatorPage locatorPage = PageFactory.initElements(driver, LocatorPage.class);
 
         locatorPage.TestingRadio();
+        
+
 	}
 	
 	//Testing the AddRemoveElemnents Function
@@ -62,8 +66,11 @@ public class HeroApp {
         LocatorPage locatorPage = PageFactory.initElements(driver, LocatorPage.class); 
         
         locatorPage.ElementCreation();
+        		
+        driver.navigate().back();
         
-        BrowserFactory.quitBrowser(driver);
+		BrowserFactory.quitBrowser(driver);
+
 	}
 	
 	
