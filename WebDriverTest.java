@@ -14,6 +14,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import com.practice.assignments.BrowserSetup;
@@ -31,10 +32,20 @@ public class WebDriverTest {
 	
 	WebDriver driver;
 	String url = "https://www.yahoo.com";
+	
+	
+	@DataProvider (name ="US Cities")
+	public Object[][] dpMethod(){
+		return new Object[][] {
+			{"New York City"}, 
+			{"Chicago"}, 
+			{"San Diego"}, 
+			{"New Orleans"}};
+	}
 
 	
-	@Test
-	public void testYahooPage() {
+	@Test(dataProvider = "US Cities")
+	public void testYahooPage(String cities) {
 		
 		driver = BrowserSetup.startApplication(driver, "Firefox", "https://www.yahoo.com");
 
@@ -51,23 +62,21 @@ public class WebDriverTest {
 		// Step 2. Display the count of links under the search bar ('Mail', 'COVID-19', 'News', 'Finance', ...)
 		// including 'More...' option
 			
-			List<WebElement> links = driver.findElements(By.xpath("//a[@class='_yb_1src8 ']"));
+			List<WebElement> links = driver.findElements(By.xpath("//a[@class='_yb_56fvw ']"));
 			System.out.println("The number of links is " + links.size());
 		
 		// Step 3. Write an enhanced for-each loop that will print each of the links from step 2
-			String [] hLinks = {"Mail", "COVID-19", "News", "Finance", "Sports", "Entertainment", "Life", "Shopping", "Yahoo Plus", "More..."};
-			for (String i : hLinks) {
-				System.out.println("The links include " + i);	
+			List<WebElement> hLinks = driver.findElements(By.xpath("//a[@class='_yb_56fvw ']")) ;
+			for (WebElement i : hLinks) {
+				System.out.println("The links are " + i);	
 			}
 			
 		// Step 4. Enter 'New York City' in the search bar on the top
-			WebElement searchBar = driver.findElement(By.xpath("//input[@id='ybar-sbq']"));
-			searchBar.click();
-			searchBar.sendKeys("New York");
+			driver.findElement(By.xpath("//input[@id='ybar-sbq']")).sendKeys(cities);
+
 			
 		// Step 5. Click Search button
-			WebElement searchButton = driver.findElement(By.xpath("//input[@id='ybar-search']"));
-			searchButton.click();
+			driver.findElement(By.xpath("//input[@id='ybar-search']")).click();
 			
 		// Step 6. Set a 7 second explicit wait for the result of the search
 		// Use an appropriate condition of your choice
@@ -79,21 +88,19 @@ public class WebDriverTest {
 			signInButton.click();
 
 		// Step 8. Display the boolean state of the checkbox next to 'Keep me signed in'
-			WebElement checkbox = driver.findElement(By.xpath("//label[@for='persistent']"));
-			for(int i=0; i<2; i++) {
-				checkbox.click();
-				System.out.println(checkbox.isSelected());
-			}
+			boolean checkbox = driver.findElement(By.xpath("//label[@for='persistent']")).isSelected();
+			
 			
 		// Step 9. Create a logic that will uncheck the checkbox if it is checked 
-			if(checkbox.isSelected()) {
-				checkbox.click();
+			WebElement checkBox1 = driver.findElement(By.xpath("//label[@for='persistent']"));
+			if(checkBox1.isSelected()) {
+				checkBox1.click();
 				System.out.println("Checkbox is Toggled off");
 			}
 			else {
-				System.out.println("Checkbox is still selected.");
+				System.out.println("Checkbox is Toggled on.");
 			}
-			if(!checkbox.isSelected()) {
+			if(!checkBox1.isSelected()) {
 				System.out.println("Checkbox is now Off!!");
 			}
 

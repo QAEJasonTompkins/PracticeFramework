@@ -5,9 +5,12 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 
 public class BrowserSetup {
 	
+	@BeforeSuite
 	public static WebDriver startApplication(WebDriver driver,String browserName,String appURL)
 	{
 		if(browserName.equals("Chrome"))
@@ -35,7 +38,7 @@ public class BrowserSetup {
 		return driver;
 
 }
-	
+	@AfterSuite
 	public static void quitBrowser(WebDriver driver)
 	{
 		driver.quit();
